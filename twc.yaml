@@ -4,6 +4,10 @@ esphome:
 
 esp32:
   board: esp32dev
+  variant: esp32
+  flash_size: 4MB
+  framework:
+    type: esp-idf
 
 wifi:
   ssid: !secret wifi_ssid
@@ -13,20 +17,32 @@ logger:
   level: DEBUG
 
 ota:
+  platform: esphome
 
 api:
 
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  clean_session: true
+  client_id: twc
+  discover_ip: false
+  discovery: false
+  topic_prefix: twc
+  log_topic: null
+
 uart:
   id: twc_uart
-  tx_pin: 5
-  rx_pin: 19
+  tx_pin: 21
+  rx_pin: 22
   baud_rate: 9600
   data_bits: 8
   parity: NONE
   stop_bits: 1
 
 external_components:
-  - source: github://jnicolson/esphome-twc-controller
+  - source: components
     components: [twc-controller]
 
 twc-controller:
@@ -36,7 +52,6 @@ twc-controller:
   max_current: 32
   set_current: 6
   twc_id: 0xAB32
-  flow_control_pin: 18
   current:
     name: "Charging Current"
   max_allowable_current:

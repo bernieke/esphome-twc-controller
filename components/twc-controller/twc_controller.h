@@ -43,8 +43,6 @@ namespace esphome {
                 void set_twcid(uint16_t);
 
                 void set_passive_mode(int passive_mode) { this->passive_mode_ = passive_mode; }
-                void set_flow_control_pin(GPIOPin *flow_control_pin) { this->flow_control_pin_ = flow_control_pin; }
-
                 SUB_SENSOR(current)
                 SUB_SENSOR(max_allowable_current)
                 SUB_SENSOR(total_kwh_delivered)
@@ -82,7 +80,6 @@ namespace esphome {
 
 /* End IO Functions */
             protected:
-                GPIOPin *flow_control_pin_{nullptr};
                 void print_params_();
                 void control(float value);
 

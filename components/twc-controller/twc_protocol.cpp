@@ -27,9 +27,8 @@ namespace esphome {
     namespace twc_controller {
         static const char *TAG = "twc.protocol";
 
-        TeslaController::TeslaController(uart::UARTComponent* serial, TeslaControllerIO *io, uint16_t twcid, GPIOPin *flow_control_pin, int passive_mode) :
+        TeslaController::TeslaController(uart::UARTComponent* serial, TeslaControllerIO *io, uint16_t twcid, int passive_mode) :
             serial_(serial),
-            flow_control_pin_(flow_control_pin),
             controller_io_(io),
             num_connected_chargers_(0),
             twcid_(twcid),
@@ -49,8 +48,6 @@ namespace esphome {
             controller_io_->onCurrentMessage([this](uint8_t current){ this->SetCurrent(current); });
 
             receive_index_ = 0;
-            if (this->flow_control_pin_ != nullptr)
-                this->flow_control_pin_->digital_write(false);
         }
 
 
@@ -805,14 +802,8 @@ namespace esphome {
 
             }
 
-            if (this->flow_control_pin_ != nullptr)
-                this->flow_control_pin_->digital_write(true);
-
             serial_->write_array(outputBuffer, j);
             serial_->flush(); // Make sure the serial data has finished sending before putting the RS485 transceiver back into receive mode
-
-            if (this->flow_control_pin_ != nullptr)
-                this->flow_control_pin_->digital_write(false);
         }
 
         void TeslaController::SetMaxCurrent(uint8_t max_current) {

@@ -1,3 +1,10 @@
+Forked from https://github.com/jnicolson/esphome-twc-controller
+
+Changed pins and board config, and removed flow control to support running on the LILYGO T-CAN485 board.
+
+Added mqtt for control by evcc.
+
+
 # TWC Controller
 
 This is an [esphome](https://esphome.io) external component of the Tesla Wall Connector Gen2 controller which was previously a standalone Arduino application (https://github.com/jnicolson/twc-controller).  The change to esphome means no more worrying about the boilerplate type setup of Wifi, Over the air updates, MQTT connections, etc.  Instead the focus just becomes on the Tesla load sharing protocol.
@@ -19,6 +26,24 @@ This should run on any ESP32 based board with an RS485 transceiver which support
 Included in this repository is an example esphome yaml file. This assumes:
 * Secondary UART connected to GPIO5 and GPIO19 (update as required)
 * RS485 Receive Enable connected to GPIO18
+
+
+Pre-requisites:
+```
+mkvirtualenv esphome
+pip install esphome esp-idf-size
+```
+
+Compile and upload:
+```
+esphome compile twc.yaml
+esphome upload twc.yaml
+```
+
+Accessing the logs:
+```
+esphome logs twc.yaml
+```
 
 ## Other Projects
 

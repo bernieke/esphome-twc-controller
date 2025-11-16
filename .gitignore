@@ -1,5 +1,2 @@
 __pycache__/
-
-# Ignore vim recovery files
-.*.swp
-
+.esphome

@@ -22,13 +22,9 @@ namespace esphome {
         static const char *TAG = "twc";
 
         void TWCController::setup() {
-            if (this->flow_control_pin_ != nullptr) {
-                this->flow_control_pin_->setup();
-            }
-
             this->publish_state(this->min_current_);
 
-            teslaController_ = new TeslaController(this->parent_, this, twcid_, flow_control_pin_, passive_mode_);
+            teslaController_ = new TeslaController(this->parent_, this, twcid_, passive_mode_);
 
             teslaController_->SetMinCurrent(this->min_current_);
             teslaController_->SetMaxCurrent(this->max_current_);
@@ -166,7 +162,6 @@ namespace esphome {
             ESP_LOGCONFIG(TAG,"  TWC ID: 0x%s", format_hex(this->twcid_).c_str());
             ESP_LOGCONFIG(TAG,"  Min Current: %d", this->min_current_);
             ESP_LOGCONFIG(TAG,"  Max Current: %d", this->max_current_);
-            LOG_PIN("  Flow Control Pin: ", this->flow_control_pin_);
         }
 
         void TWCController::set_min_current(uint8_t current) {

@@ -165,7 +165,7 @@ namespace esphome {
 
         class TeslaController {
             public:
-                TeslaController(uart::UARTComponent* serial, TeslaControllerIO *io, uint16_t twcid, GPIOPin *flow_control_pin, int passive_mode);
+                TeslaController(uart::UARTComponent* serial, TeslaControllerIO *io, uint16_t twcid, int passive_mode);
 
                 void Begin();
                 void GetPowerStatus(uint16_t secondary_twcid);
@@ -215,7 +215,6 @@ namespace esphome {
 
             private:
                 uart::UARTComponent *serial_;
-                GPIOPin *flow_control_pin_{nullptr};
                 TeslaControllerIO *controller_io_;
                 uint8_t num_connected_chargers_;
                 uint16_t twcid_;
